@@ -9,4 +9,7 @@ class Place {
   Place({
     required this.title,
   }) : id = uuid.v4();
+
+  @override
+  String toString() => 'Place(id: $id, title: $title)';
 }

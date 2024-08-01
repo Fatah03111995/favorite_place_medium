@@ -1,16 +1,16 @@
 import 'package:favorite_place_medium/screens/places_main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
 final colorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
   seedColor: const Color.fromARGB(255, 102, 6, 247),
-  background: const Color.fromARGB(255, 56, 49, 66),
+  surface: const Color.fromARGB(255, 56, 49, 66),
 );
 
-final theme = ThemeData.dark().copyWith(
-  scaffoldBackgroundColor: Colors.black45,
+final theme = ThemeData().copyWith(
   colorScheme: colorScheme,
   textTheme: GoogleFonts.ubuntuCondensedTextTheme().copyWith(
     titleSmall: GoogleFonts.ubuntuCondensed(
@@ -27,7 +27,7 @@ final theme = ThemeData.dark().copyWith(
 
 void main() {
   runApp(
-    const MyApp(),
+    const ProviderScope(child: MyApp()),
   );
 }
 
