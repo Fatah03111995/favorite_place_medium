@@ -11,8 +11,21 @@ class PlacesDetailPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(place.title),
       ),
-      body: Center(
-        child: Text(place.title),
+      body: Stack(
+        children: [
+          Image.file(
+            place.fileImage,
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
+          Center(
+            child: Text(
+              place.title,
+              style: const TextStyle(fontSize: 30, color: Colors.white),
+            ),
+          ),
+        ],
       ),
     );
   }

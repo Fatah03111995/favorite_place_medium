@@ -10,8 +10,6 @@ class PlacesMainPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userPlaces = ref.watch(userPlacesProvider);
-    print('place main page');
-    print(userPlaces);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your places'),
@@ -27,8 +25,11 @@ class PlacesMainPage extends ConsumerWidget {
           )
         ],
       ),
-      body: PlacesList(
-        places: userPlaces,
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: PlacesList(
+          places: userPlaces,
+        ),
       ),
     );
   }
