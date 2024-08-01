@@ -1,3 +1,4 @@
 # favorite_place_medium
 
-A new Flutter project.
+Learn About Native Device Feature
+Learn About Riverpod
