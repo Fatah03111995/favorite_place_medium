@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:favorite_place_medium/providers/user_places.dart';
 import 'package:favorite_place_medium/widgets/image_input.dart';
+import 'package:favorite_place_medium/widgets/location_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -53,6 +54,8 @@ class _PlacesAddPageState extends ConsumerState<PlacesAddPage> {
                 this.selectedImage = selectedImage;
               },
             ),
+            const SizedBox(height: 16),
+            LocationInput(),
             const SizedBox(height: 16),
             ElevatedButton.icon(
                 onPressed: () {
