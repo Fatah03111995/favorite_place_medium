@@ -9,7 +9,10 @@ class PlacesDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(place.title),
+        title: Text(
+          place.title,
+          style: const TextStyle(color: Colors.white),
+        ),
       ),
       body: Stack(
         children: [

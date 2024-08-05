@@ -38,13 +38,17 @@ class _PlacesAddPageState extends ConsumerState<PlacesAddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add New Place'),
+        title: const Text(
+          'Add New Place',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(
           children: [
             TextField(
+              style: const TextStyle(color: Colors.white),
               decoration: const InputDecoration(labelText: 'Title'),
               controller: _titleController,
             ),
@@ -62,7 +66,10 @@ class _PlacesAddPageState extends ConsumerState<PlacesAddPage> {
                   _safePlace();
                 },
                 icon: const Icon(Icons.add),
-                label: const Text('Add Place')),
+                label: const Text(
+                  'Add Place',
+                  style: TextStyle(color: Colors.white),
+                )),
           ],
         ),
       ),

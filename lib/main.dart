@@ -20,12 +20,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         textTheme: GoogleFonts.ubuntuCondensedTextTheme().copyWith(
           titleSmall: GoogleFonts.ubuntuCondensed(
-            fontWeight: FontWeight.bold,
-          ),
+              fontWeight: FontWeight.bold, color: Colors.white),
           titleMedium: GoogleFonts.ubuntuCondensed(
+            color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
           titleLarge: GoogleFonts.ubuntuCondensed(
+            color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),

@@ -13,7 +13,10 @@ class PlacesList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (places.isEmpty) {
       return const Center(
-        child: Text('No Places added yet'),
+        child: Text(
+          'No Places added yet',
+          style: TextStyle(color: Colors.white),
+        ),
       );
     }
 
@@ -21,26 +24,22 @@ class PlacesList extends StatelessWidget {
       itemCount: places.length,
       itemBuilder: (context, index) {
         return ListTile(
-          leading: CircleAvatar(
-            backgroundImage: FileImage(places[index].fileImage),
-            radius: 26,
-          ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PlacesDetailPage(
-                  place: places[index],
+            leading: CircleAvatar(
+              backgroundImage: FileImage(places[index].fileImage),
+              radius: 26,
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PlacesDetailPage(
+                    place: places[index],
+                  ),
                 ),
-              ),
-            );
-          },
-          title: Text(places[index].title,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium!
-                  .copyWith(color: Colors.black)),
-        );
+              );
+            },
+            title: Text(places[index].title,
+                style: Theme.of(context).textTheme.titleMedium!));
       },
     );
   }

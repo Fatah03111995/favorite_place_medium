@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LocationInput extends StatefulWidget {
   const LocationInput({super.key});
@@ -12,6 +15,8 @@ class LocationInput extends StatefulWidget {
 
 class _LocationInputState extends State<LocationInput> {
   bool _isGetLocation = false;
+  double? lon;
+  double? lat;
 
   void _getCurrentLocation() async {
     Location location = Location();
@@ -41,28 +46,61 @@ class _LocationInputState extends State<LocationInput> {
     });
 
     locationData = await location.getLocation();
-    print({
-      'acc': locationData.accuracy,
-      'lat': locationData.latitude,
-      'lon': locationData.longitude,
-    });
-
     setState(() {
+      lat = locationData.latitude;
+      lon = locationData.longitude;
       _isGetLocation = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget runMap(double lon, double lat) {
+      return FlutterMap(
+        options: MapOptions(
+          initialCenter: LatLng(lat, lon),
+          initialZoom: 15,
+        ),
+        children: [
+          TileLayer(
+            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+            userAgentPackageName: 'com.example.app',
+          ),
+          MarkerLayer(
+            markers: [
+              Marker(
+                  point: LatLng(lat, lon),
+                  child: const Icon(
+                    Icons.location_pin,
+                    size: 40,
+                    color: Colors.red,
+                  ))
+            ],
+          ),
+          RichAttributionWidget(
+            attributions: [
+              TextSourceAttribution(
+                'OpenStreetMap contributors',
+                onTap: () =>
+                    launchUrl(Uri.parse('https://openstreetmap.org/copyright')),
+              ),
+            ],
+          ),
+        ],
+      );
+    }
+
     Widget content = _isGetLocation
         ? const Center(
             child: CircularProgressIndicator(),
           )
-        : const Text(
-            'No Location chosen',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontSize: 12),
-          );
+        : lat == null || lon == null
+            ? const Text(
+                'No Location chosen',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white, fontSize: 12),
+              )
+            : runMap(lon!, lat!);
 
     return Column(
       children: [

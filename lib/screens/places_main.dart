@@ -12,7 +12,10 @@ class PlacesMainPage extends ConsumerWidget {
     final userPlaces = ref.watch(userPlacesProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your places'),
+        title: const Text(
+          'Your places',
+          style: TextStyle(color: Colors.white),
+        ),
         actions: [
           IconButton(
             onPressed: () {
