@@ -24,22 +24,25 @@ class PlacesList extends StatelessWidget {
       itemCount: places.length,
       itemBuilder: (context, index) {
         return ListTile(
-            leading: CircleAvatar(
-              backgroundImage: FileImage(places[index].fileImage),
-              radius: 26,
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PlacesDetailPage(
-                    place: places[index],
-                  ),
+          leading: CircleAvatar(
+            backgroundImage: FileImage(places[index].fileImage),
+            radius: 26,
+          ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PlacesDetailPage(
+                  place: places[index],
                 ),
-              );
-            },
-            title: Text(places[index].title,
-                style: Theme.of(context).textTheme.titleMedium!));
+              ),
+            );
+          },
+          title: Text(places[index].title,
+              style: Theme.of(context).textTheme.titleMedium!),
+          subtitle: Text(places[index].locationPlaceData.data['display_name'],
+              style: Theme.of(context).textTheme.titleSmall!),
+        );
       },
     );
   }

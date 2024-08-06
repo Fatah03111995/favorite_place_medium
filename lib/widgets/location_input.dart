@@ -1,11 +1,16 @@
+import 'dart:convert';
+
+import 'package:favorite_place_medium/models/location_place.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
 
 class LocationInput extends StatefulWidget {
-  const LocationInput({super.key});
+  final void Function(LocationPlace) onSelectLocation;
+  const LocationInput({super.key, required this.onSelectLocation});
 
   @override
   State<StatefulWidget> createState() {
@@ -46,9 +51,15 @@ class _LocationInputState extends State<LocationInput> {
     });
 
     locationData = await location.getLocation();
+    lat = locationData.latitude;
+    lon = locationData.longitude;
+    Uri url = Uri.parse(
+        'https://nominatim.openstreetmap.org/reverse?format=json&lat=$lat&lon=$lon');
+    final response = await http.get(url);
+
+    widget.onSelectLocation(LocationPlace(
+        latitude: lat!, longitude: lon!, data: jsonDecode(response.body)));
     setState(() {
-      lat = locationData.latitude;
-      lon = locationData.longitude;
       _isGetLocation = false;
     });
   }
