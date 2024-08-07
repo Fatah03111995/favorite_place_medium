@@ -4,6 +4,7 @@ import 'package:favorite_place_medium/models/location_place.dart';
 import 'package:favorite_place_medium/screens/pick_map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:http/http.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -52,15 +53,18 @@ class _LocationInputState extends State<LocationInput> {
     lon = locationData.longitude;
   }
 
+  Future<Response> _getData() async {
+    Uri url = Uri.parse(
+        'https://nominatim.openstreetmap.org/reverse?format=json&lat=$lat&lon=$lon');
+    return await http.get(url);
+  }
+
   void _getCurrentLocation() async {
     setState(() {
       _isGetLocation = true;
     });
     await _getLocation();
-    Uri url = Uri.parse(
-        'https://nominatim.openstreetmap.org/reverse?format=json&lat=$lat&lon=$lon');
-    final response = await http.get(url);
-
+    final response = await _getData();
     widget.onSelectLocation(LocationPlace(
         latitude: lat!, longitude: lon!, data: jsonDecode(response.body)));
     setState(() {
@@ -73,10 +77,23 @@ class _LocationInputState extends State<LocationInput> {
     if (!mounted || lat == null || lon == null) {
       return;
     }
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => PickMap(initial: LatLng(lat!, lon!))));
+    LatLng update = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PickMap(
+          initial: LatLng(lat!, lon!),
+        ),
+      ),
+    );
+
+    setState(() {
+      lat = update.latitude;
+      lon = update.longitude;
+    });
+
+    final response = await _getData();
+    widget.onSelectLocation(LocationPlace(
+        latitude: lat!, longitude: lon!, data: jsonDecode(response.body)));
   }
 
   @override
