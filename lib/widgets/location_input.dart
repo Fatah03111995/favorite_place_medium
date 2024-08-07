@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:favorite_place_medium/models/location_place.dart';
+import 'package:favorite_place_medium/screens/pick_map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -23,7 +24,7 @@ class _LocationInputState extends State<LocationInput> {
   double? lon;
   double? lat;
 
-  void _getCurrentLocation() async {
+  Future<void> _getLocation() async {
     Location location = Location();
 
     bool serviceEnabled;
@@ -46,13 +47,16 @@ class _LocationInputState extends State<LocationInput> {
       }
     }
 
-    setState(() {
-      _isGetLocation = true;
-    });
-
     locationData = await location.getLocation();
     lat = locationData.latitude;
     lon = locationData.longitude;
+  }
+
+  void _getCurrentLocation() async {
+    setState(() {
+      _isGetLocation = true;
+    });
+    await _getLocation();
     Uri url = Uri.parse(
         'https://nominatim.openstreetmap.org/reverse?format=json&lat=$lat&lon=$lon');
     final response = await http.get(url);
@@ -62,6 +66,17 @@ class _LocationInputState extends State<LocationInput> {
     setState(() {
       _isGetLocation = false;
     });
+  }
+
+  void _pickMap() async {
+    await _getLocation();
+    if (!mounted || lat == null || lon == null) {
+      return;
+    }
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => PickMap(initial: LatLng(lat!, lon!))));
   }
 
   @override
@@ -138,7 +153,7 @@ class _LocationInputState extends State<LocationInput> {
               label: const Text('Get Current Location'),
             ),
             TextButton.icon(
-              onPressed: () {},
+              onPressed: _pickMap,
               icon: const Icon(Icons.map),
               label: const Text('Select on Map'),
             )

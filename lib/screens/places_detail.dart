@@ -32,7 +32,7 @@ class PlacesDetailPage extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => PickMap(
                     initial: LatLng(place.locationPlaceData.latitude,
-                        place.locationPlaceData.latitude),
+                        place.locationPlaceData.longitude),
                   ),
                 ),
               );
@@ -51,7 +51,7 @@ class PlacesDetailPage extends StatelessWidget {
                         options: MapOptions(
                           initialCenter: LatLng(
                               place.locationPlaceData.latitude,
-                              place.locationPlaceData.latitude),
+                              place.locationPlaceData.longitude),
                           initialZoom: 15,
                         ),
                         children: [
@@ -65,7 +65,7 @@ class PlacesDetailPage extends StatelessWidget {
                               Marker(
                                   point: LatLng(
                                       place.locationPlaceData.latitude,
-                                      place.locationPlaceData.latitude),
+                                      place.locationPlaceData.longitude),
                                   child: const Icon(
                                     Icons.location_pin,
                                     size: 40,
