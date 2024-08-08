@@ -12,11 +12,12 @@ class Place {
   final String title;
   final File fileImage;
   final LocationPlace locationPlaceData;
-  Place({
-    required this.title,
-    required this.fileImage,
-    required this.locationPlaceData,
-  }) : id = uuid.v4();
+  Place(
+      {required this.title,
+      required this.fileImage,
+      required this.locationPlaceData,
+      String? id})
+      : id = id ?? uuid.v4();
 
   @override
   String toString() => 'Place(id: $id, title: $title, fileImage: $fileImage)';

@@ -1,3 +1,4 @@
+import 'package:favorite_place_medium/providers/user_places.dart';
 import 'package:favorite_place_medium/screens/places_main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,11 +11,12 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.read(userPlacesProvider.notifier).loadData();
     return MaterialApp(
       title: 'Great Places',
       theme: ThemeData.dark().copyWith(
