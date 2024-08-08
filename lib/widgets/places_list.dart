@@ -19,7 +19,6 @@ class PlacesList extends StatelessWidget {
         ),
       );
     }
-    print(places.first.locationPlaceData.data);
     return ListView.builder(
       itemCount: places.length,
       itemBuilder: (context, index) {
@@ -40,7 +39,7 @@ class PlacesList extends StatelessWidget {
           },
           title: Text(places[index].title,
               style: Theme.of(context).textTheme.titleMedium!),
-          subtitle: Text(places[index].locationPlaceData.data['display_name'],
+          subtitle: Text(places[index].locationPlaceData.address,
               style: Theme.of(context).textTheme.titleSmall!),
         );
       },

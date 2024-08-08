@@ -86,7 +86,7 @@ class PlacesDetailPage extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        place.locationPlaceData.data['display_name'],
+                        place.locationPlaceData.address,
                         style: Theme.of(context).textTheme.titleMedium!,
                       ),
                     )

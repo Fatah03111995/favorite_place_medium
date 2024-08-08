@@ -1,8 +1,8 @@
 class LocationPlace {
   final double latitude;
   final double longitude;
-  final Map<String, dynamic> data;
+  final String address;
 
   LocationPlace(
-      {required this.latitude, required this.longitude, required this.data});
+      {required this.latitude, required this.longitude, required this.address});
 }

@@ -66,7 +66,9 @@ class _LocationInputState extends State<LocationInput> {
     await _getLocation();
     final response = await _getData();
     widget.onSelectLocation(LocationPlace(
-        latitude: lat!, longitude: lon!, data: jsonDecode(response.body)));
+        latitude: lat!,
+        longitude: lon!,
+        address: jsonDecode(response.body)['display_name'] as String));
     setState(() {
       _isGetLocation = false;
     });
@@ -93,7 +95,9 @@ class _LocationInputState extends State<LocationInput> {
 
     final response = await _getData();
     widget.onSelectLocation(LocationPlace(
-        latitude: lat!, longitude: lon!, data: jsonDecode(response.body)));
+        latitude: lat!,
+        longitude: lon!,
+        address: jsonDecode(response.body)['display_name'] as String));
   }
 
   @override
@@ -133,18 +137,6 @@ class _LocationInputState extends State<LocationInput> {
       );
     }
 
-    Widget content = _isGetLocation
-        ? const Center(
-            child: CircularProgressIndicator(),
-          )
-        : lat == null || lon == null
-            ? const Text(
-                'No Location chosen',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white, fontSize: 12),
-              )
-            : runMap(lon!, lat!);
-
     return Column(
       children: [
         Container(
@@ -159,7 +151,17 @@ class _LocationInputState extends State<LocationInput> {
               color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
             ),
           ),
-          child: content,
+          child: _isGetLocation
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : lat == null || lon == null
+                  ? const Text(
+                      'No Location chosen',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white, fontSize: 12),
+                    )
+                  : runMap(lon!, lat!),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
